@@ -1,15 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# ---------------- Colores unificados ----------------
-C1 = 'blue'    # primera curva / curva principal
-C2 = 'red'     # segunda curva / resaltados
-CG = 'gray'    # asíntotas, ejes y zonas sombreadas
-CP = 'black'   # puntos solución
+C1 = 'blue'
+C2 = 'red'
+CG = 'gray'
+CP = 'black'
 
-# =====================================================
-# 1) y = x  vs  y = tan(x)
-# =====================================================
 sol_x = 4.493405
 eps = 0.01
 
@@ -39,9 +35,6 @@ plt.grid()
 plt.show()
 
 
-# =====================================================
-# Método de bisección
-# =====================================================
 def biseccion(f, a, b, TOL=1e-6, N0=100):
     """Devuelve (p, historia), con historia = [(a, b, p) por iteración]."""
     FA = f(a)
@@ -67,10 +60,7 @@ def biseccion(f, a, b, TOL=1e-6, N0=100):
     raise RuntimeError(f"Fracaso después de {N0} iteraciones.")
 
 
-# =====================================================
-# 2) Caída con resistencia del aire
-# =====================================================
-grav = 9.81          # (antes 'g': se pisaba con la función g(x) del final)
+grav = 9.81
 s0, m, k = 300.0, 0.25, 0.1
 
 
@@ -105,9 +95,6 @@ t_star, historia = biseccion(s, 0.0, 20.0, TOL=1e-4)
 graficar(t_star, historia, k_iteracion=3)
 
 
-# =====================================================
-# 3) Ceros del polinomio
-# =====================================================
 def f(x):
     return (x + 3) * (x + 1)**2 * x * (x - 1)**3 * (x - 3)
 
@@ -124,9 +111,6 @@ for a, b in intervalos:
     print(f"Intervalo [{a}, {b}] -> Converge al cero: {round(p)}")
 
 
-# =====================================================
-# 4) Abrevadero
-# =====================================================
 L = 10.0
 r = 1.0
 V = 12.4
@@ -149,9 +133,6 @@ for i, (a_i, b_i, p_i) in enumerate(historia, 1):
     print(f"{i:2d} | {a_i:8.4f} | {b_i:8.4f} | {p_i:8.4f} | {(b_i - a_i)/2:8.4f}")
 
 
-# =====================================================
-# 5) x^2 - 1 = e^(1 - x^2) en [-2, 0]
-# =====================================================
 x = np.linspace(-2.2, 0.2, 300)
 plt.figure(figsize=(7, 4))
 plt.plot(x, x**2 - 1, color=C1, label=r"$y = x^2 - 1$")
@@ -169,13 +150,10 @@ def w(x):
     return (x**2 - 1) - np.exp(1 - x**2)
 
 
-p, historia = biseccion(w, -2.0, 0.0, TOL=1e-3)      # antes usaba f (error)
+p, historia = biseccion(w, -2.0, 0.0, TOL=1e-3)
 print(f"Solución encontrada: {p:.6f}")
 
 
-# =====================================================
-# 6) x = tan(x) en [4.0, 4.6]
-# =====================================================
 x = np.linspace(3.5, 4.65, 300)
 plt.figure(figsize=(7, 4))
 plt.plot(x, x, color=C1, label=r"$y = x$")
@@ -193,14 +171,11 @@ def Z(x):
     return x - np.tan(x)
 
 
-p, historia = biseccion(Z, 4.0, 4.6, TOL=1e-5)       # antes usaba f (error)
+p, historia = biseccion(Z, 4.0, 4.6, TOL=1e-5)
 print(f"Solución encontrada: {p:.6f}")
 
 
-# =====================================================
-# 7) x = 2 sin(x) en [1, 2]
-# =====================================================
-x = np.linspace(0, 3, 300)   # faltaba: se reutilizaba el x de la gráfica anterior
+x = np.linspace(0, 3, 300)
 plt.figure(figsize=(7, 4))
 plt.plot(x, x, color=C1, label=r"$y = x$")
 plt.plot(x, 2 * np.sin(x), color=C2, label=r"$y = 2\sin(x)$")
@@ -217,13 +192,10 @@ def R(x):
     return x - 2 * np.sin(x)
 
 
-p, historia = biseccion(R, 1.0, 2.0, TOL=1e-5)       # antes usaba f (error)
+p, historia = biseccion(R, 1.0, 2.0, TOL=1e-5)
 print(f"Solución encontrada: {p:.6f}")
 
 
-# =====================================================
-# 8) Cúbica x^3 - 7x^2 + 14x - 6
-# =====================================================
 def g(x):
     return x**3 - 7*x**2 + 14*x - 6
 
